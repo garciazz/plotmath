@@ -175,7 +175,8 @@ void loop()
   
   number(0,25,randNumber1,1.2);
   //number(25, 25, 12, 1.2);          //Sinal X-Multiplicacao
-  number(25, 25, 13, 1.2);            //Sinal +
+  //number(25, 25, 13, 1.2);            //Sinal +
+  number(25, 25, 11, 1.2);
   number(48,25,randNumber2,1.2);
 
   //number(25,25,randNumber1,1.2);
@@ -379,7 +380,7 @@ void number(float bx, float by, int num, float scale) {
     lift(1);
     break;
 
-  case 111:
+  case 111:  // movimento para apagar tela
 
     lift(0);
     drawTo(70, 46);
@@ -409,7 +410,7 @@ void number(float bx, float by, int num, float scale) {
 
     break;
 
-  case 11:
+  case 11:  // : sinal dois pontos
     drawTo(bx + 5 * scale, by + 15 * scale);
     lift(0);
     bogenGZS(bx + 5 * scale, by + 15 * scale, 0.1 * scale, 1, -1, 1);
