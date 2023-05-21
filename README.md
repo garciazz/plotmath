@@ -4,7 +4,7 @@ Aprendendo matemática + e X, pode ser respondido pelo App 'BT Voice Control for
 BT Voice Control for Arduino
 https://play.google.com/store/apps/details?id=robotspace.simplelabs.amr_voice
 
-Conexôes e ligações:
+Conexões:
 https://fritzing.org/projects/plot-math
 
 Baseado em - Credits to:
