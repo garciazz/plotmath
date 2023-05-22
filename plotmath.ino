@@ -22,7 +22,7 @@
 //#define CALIBRATION      // enable calibration mode
 //#define REALTIMECLOCK    // enable real time clock
 #include <SoftwareSerial.h>
-SoftwareSerial BLU(6, 7);   //TX, TX   //RAFA00
+SoftwareSerial BLU(6, 7);   //TX, RX
 //#include <String.h>
 
 String voice;
@@ -47,7 +47,7 @@ int x;
 //#define LIFT0 1080 // on drawing surface
 //#define LIFT1 925  // between numbers
 //#define LIFT2 725  // going towards sweeper
-#define LIFT0 1130   // on drawing surface
+#define LIFT0 1050   // on drawing surface >> maior mais aperta a caneta //1050
 #define LIFT1 825  // between numbers
 #define LIFT2 605  // going towards sweeper
 
@@ -92,7 +92,6 @@ long Number;
 int randNumber1;
 int randNumber2;
 char resposta[50];
-//int resposta2;            //RAFA01
 String resposta2;
 int tentativas = 0;
 
@@ -174,9 +173,8 @@ void loop()
   //randNumber2 = 6;  
   
   number(0,25,randNumber1,1.2);
-  //number(25, 25, 12, 1.2);          //Sinal X-Multiplicacao
-  //number(25, 25, 13, 1.2);            //Sinal +
-  number(25, 25, 11, 1.2);
+  //number(25, 25, 12, 1.2);            //Sinal X-Multiplicacao
+  number(25, 25, 13, 1.2);            //Sinal +
   number(48,25,randNumber2,1.2);
 
   //number(25,25,randNumber1,1.2);
@@ -193,27 +191,25 @@ void loop()
   //Serial.print(" x ");
   Serial.print(" + ");
   Serial.println(randNumber2);
-  Serial.println("resposta:::::");
   //Serial.println(resposta2);    //RAFA00
     //sprintf(resposta, "", Number);
   tentativas = 3;
   
    Serial.println("Qual sua resposta? ");
+   digitalWrite(13, HIGH);
+   digitalWrite(12, HIGH);
    while(tentativas > 0){
    //while(Serial.available()==0){}
    //x = Serial.parseInt();
   while(true){
-        if (BLU.available()){
-        delay(10);                   //Delay added to make thing stable 
-      
+      if (BLU.available()){
+        delay(10);                   //Delay added to make thing stable     
         char c = BLU.read();      //Conduct a serial read
       
-        if (c == '#') 
-        {
+        if (c == '#'){
           respondeu = 1;
           //Serial.println("RECEBEU");            //RAFA01
           break;                     //Exit the loop when the # is detected after the word
-     
         }
         if (c != '*'){
           voice += c;
@@ -276,6 +272,7 @@ void loop()
 }
 
 void acertou(){
+  Serial.println("função acertou ");
   digitalWrite(13, HIGH);
   digitalWrite(12, HIGH);
   delay(700);
@@ -291,6 +288,7 @@ void acertou(){
   }
 
 void errou(){
+  Serial.println("função errou");
   digitalWrite(13, HIGH);
   delay(700);
   digitalWrite(13, LOW);
@@ -312,7 +310,6 @@ void number(float bx, float by, int num, float scale) {
     lift(1);
     break;
   case 1:
-
     drawTo(bx + 3 * scale, by + 15 * scale);
     lift(0);
     drawTo(bx + 10 * scale, by + 20 * scale);
@@ -381,7 +378,6 @@ void number(float bx, float by, int num, float scale) {
     break;
 
   case 111:  // movimento para apagar tela
-
     lift(0);
     drawTo(70, 46);
     drawTo(ERASEMAXX, 43);
@@ -407,7 +403,6 @@ void number(float bx, float by, int num, float scale) {
 
     drawTo(PARKX, PARKY);
     lift(2);
-
     break;
 
   case 11:  // : sinal dois pontos
@@ -420,7 +415,6 @@ void number(float bx, float by, int num, float scale) {
     bogenGZS(bx + 5 * scale, by + 5 * scale, 0.1 * scale, 1, -1, 1);
     lift(1);
     break;
-
 
   case 12:  // X multiplicacao sinal
     drawTo(bx + 3 * scale, by + 15 * scale);
@@ -441,14 +435,10 @@ void number(float bx, float by, int num, float scale) {
     drawTo(bx + 2 * scale, by + 10 * scale);
     lift(0);
     drawTo(bx + 16 * scale, by + 10 * scale);
-    lift(1);
-    
+    lift(1);    
     break;
-
-
   }
 }
-
 
 
 void lift(char lift) {
@@ -605,5 +595,3 @@ void set_XY(double Tx, double Ty)
   servo3.writeMicroseconds(floor(((a1 - a2) * SERVOFAKTORRIGHT) + SERVORIGHTNULL));
 
 }
-
-
